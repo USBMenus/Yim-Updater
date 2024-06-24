@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("yimUpdater")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A simple Updater + Injector for YimMenu & Extras Addon")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("KAOS Incorporated")]
 [assembly: AssemblyProduct("yimUpdater")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]

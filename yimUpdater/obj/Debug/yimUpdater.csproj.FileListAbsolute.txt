@@ -1,0 +1,12 @@
+C:\Users\saiya\Source\Repos\Yim-Updater\yimUpdater\bin\Debug\yimUpdater.exe.config
+C:\Users\saiya\Source\Repos\Yim-Updater\yimUpdater\bin\Debug\yimUpdater.exe
+C:\Users\saiya\Source\Repos\Yim-Updater\yimUpdater\bin\Debug\yimUpdater.pdb
+C:\Users\saiya\Source\Repos\Yim-Updater\yimUpdater\bin\Debug\Guna.UI2.dll
+C:\Users\saiya\Source\Repos\Yim-Updater\yimUpdater\obj\Debug\yimUpdater.csproj.AssemblyReference.cache
+C:\Users\saiya\Source\Repos\Yim-Updater\yimUpdater\obj\Debug\yimUpdater.MainForm.resources
+C:\Users\saiya\Source\Repos\Yim-Updater\yimUpdater\obj\Debug\yimUpdater.Properties.Resources.resources
+C:\Users\saiya\Source\Repos\Yim-Updater\yimUpdater\obj\Debug\yimUpdater.csproj.GenerateResource.cache
+C:\Users\saiya\Source\Repos\Yim-Updater\yimUpdater\obj\Debug\yimUpdater.csproj.CoreCompileInputs.cache
+C:\Users\saiya\Source\Repos\Yim-Updater\yimUpdater\obj\Debug\yimUpdater.csproj.Up2Date
+C:\Users\saiya\Source\Repos\Yim-Updater\yimUpdater\obj\Debug\yimUpdater.exe
+C:\Users\saiya\Source\Repos\Yim-Updater\yimUpdater\obj\Debug\yimUpdater.pdb
