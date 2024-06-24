@@ -53,21 +53,17 @@ namespace yimUpdater
         {
             InitializeComponent();
             ToolTip tt = new ToolTip();
-            tt.SetToolTip(settingsButton, "Settings");
             tt.SetToolTip(downloadAddonButton, "Download The Extras Addon To %AppData%\\YimMenu\\scripts");
             tt.SetToolTip(downloadYimButton, "Download YimMenu To The Desired Folder");
-            tt.SetToolTip(howToUseButton, "Shows A Message Explaining How To Use YimMenu");
+            tt.SetToolTip(howToUseButton, "Shows a message explaining how to use YimMenu");
+            tt.SetToolTip(extrasGuideButton, "Shows a message explaining how to add Extras Addon to YimMenu");
+            tt.SetToolTip(animGuideButton, "Shows a message explaining how to add Animations to YimMenu");
+            tt.SetToolTip(xmlGuideButton, "Shows a message explaining how to add XMLs to YimMenu");
             tt.SetToolTip(deleteCacheButton, "Deletes The Cache Folder From %AppData%\\YimMenu");
             tt.SetToolTip(injectYimButton, "Inject YimMenu DLL Into GTA5.exe");
             tt.SetToolTip(removeYimMenuButton, "Deletes YimMenu from %AppData%");
             tt.SetToolTip(downloadAnimationsButton, "Downloads animDictsCompact to %AppData%\\YimMenu");
             tt.SetToolTip(downloadXMLsButton, "Currently Broken");
-        }
-
-        private void settingsButton_Click(object sender, EventArgs e)
-        {
-            SettingsForm settingsForm = new SettingsForm();
-            settingsForm.ShowDialog();
         }
 
         private void downloadAddonButton_Click(object sender, EventArgs e)
@@ -123,13 +119,56 @@ namespace yimUpdater
         private void howToUseButton_Click(object sender, EventArgs e)
         {
             string guideMessage = "How to Install/Use YimMenu:\n\n" +
-                "1. Download YimMenu\n\n" +
+                "1. Click Download YimMenu\n\n" +
                 "2. Start GTA V \n\n" +
                 "3. Inject YimMenu\n\n" +
                 "4. Once in-game, press the INSERT key to open the YimMenu.\n\n" +
                 "5. Enjoy using YimMenu to enhance your gameplay!\n\n";
 
             MessageBox.Show(guideMessage, "How to Install/Use YimMenu", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void extrasGuideButton_Click(object sender, EventArgs e)
+        {
+            string guideMessage = "How to Install/Use Extras Addon:\n\n" +
+                "1. Download Extras Addon\n\n" +
+                "2. Start GTA V \n\n" +
+                "3. Inject YimMenu\n\n" +
+                "4. Once in-game, press the INSERT key to open the YimMenu.\n\n" +
+                "5. In YimMenu, Click Settings -> Lua Scripts\n\n" +
+                "7. Enable the 'Auto Reload Changed Scripts' checkbox & press 'Reload All'\n\n" +
+                "8. the 'Extras Addon' tab should appear at the bottom of YimMenu (right above the player list)\n\n";
+
+            MessageBox.Show(guideMessage, "How to Install/Use Extras Addon", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void animGuideButton_Click(object sender, EventArgs e)
+        {
+            string guideMessage = "How to Install/Use Animations:\n\n" +
+                "1. Click Download Animations\n\n" +
+                "2. Start GTA V \n\n" +
+                "3. Inject YimMenu\n\n" +
+                "4. Once in-game, press the INSERT key to open the YimMenu.\n\n" +
+                "5. In YimMenu, Click Settings -> Lua Scripts\n\n" +
+                "7. Enable the 'Auto Reload Changed Scripts' checkbox & press 'Reload All'\n\n" +
+                "8. the 'Extras Addon' tab should appear at the bottom of YimMenu (right above the player list)\n\n";
+
+            MessageBox.Show(guideMessage, "How to Install/Use Animations", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void xmlGuideButton_Click(object sender, EventArgs e)
+        {
+            string guideMessage = "How to Install/Use XML Maps/Vehicles:\n\n" +
+            "Click Download XML's and your browser window should open to the mega url\n\n" +
+            "After downloading, unzip the folder to your desktop and open it\n" +
+            "Once it is opened, rename both folders (XML Maps and XML Vehicles) to the following\n\n" +
+            "XML Maps -> xml_maps\n" +
+            "XML Vehicles -> xml_vehicles\n\n" +
+            "Once you are done, open a new File Explorer Window/Tab and type %APPDATA%\\YimMenu in the PATH box\n" +
+            "You should now see a list of folders, one being xml_maps and the other being xml_vehicles\n" +
+            "Simply drag and drop the folders you renamed from your desktop into the YimMenu folder & overwrite them";
+
+            DialogResult result = MessageBox.Show(guideMessage, "How to Install/Use XML's", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void deleteCacheButton_Click(object sender, EventArgs e)
@@ -227,52 +266,7 @@ namespace yimUpdater
 
         private void downloadXMLsButton_Click(object sender, EventArgs e)
         {
-            string zipUrl = "https://mega.nz/folder/BnM2jQoT#Lb6MG4m24nGv0GkNGsD3sQ";
-            string yimMenuFolderPath = Environment.ExpandEnvironmentVariables("%APPDATA%\\YimMenu");
-            string zipFilePath = Path.Combine(yimMenuFolderPath, "xmls.zip");
-            string extractedFolderPath = Path.Combine(yimMenuFolderPath, "xmls");
-
-            // Download the zip file
-            if (!DownloadFile(zipUrl, yimMenuFolderPath, "xmls.zip"))
-            {
-                MessageBox.Show("Failed to download XMLs zip file. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // Extract the zip file
-            try
-            {
-                System.IO.Compression.ZipFile.ExtractToDirectory(zipFilePath, extractedFolderPath);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error extracting XMLs zip file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // Rename old folders and rename extracted folders
-            string oldMapsFolderPath = Path.Combine(yimMenuFolderPath, "xml_maps_old");
-            string oldVehiclesFolderPath = Path.Combine(yimMenuFolderPath, "xml_vehicles_old");
-            string newMapsFolderPath = Path.Combine(yimMenuFolderPath, "xml_maps");
-            string newVehiclesFolderPath = Path.Combine(yimMenuFolderPath, "xml_vehicles");
-
-            try
-            {
-                if (Directory.Exists(oldMapsFolderPath))
-                    Directory.Move(oldMapsFolderPath, oldMapsFolderPath + "_old");
-
-                if (Directory.Exists(oldVehiclesFolderPath))
-                    Directory.Move(oldVehiclesFolderPath, oldVehiclesFolderPath + "_old");
-
-                Directory.Move(Path.Combine(extractedFolderPath, "xml_maps"), newMapsFolderPath);
-                Directory.Move(Path.Combine(extractedFolderPath, "xml_vehicles"), newVehiclesFolderPath);
-
-                MessageBox.Show("XMLs downloaded and installed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error installing XMLs: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            Process.Start("https://mega.nz/folder/BnM2jQoT#Lb6MG4m24nGv0GkNGsD3sQ/folder/sy9VWSDC");
         }
 
         private bool DownloadFile(string url, string folderPath, string fileName)
@@ -352,6 +346,16 @@ namespace yimUpdater
 
             CloseHandle(hThread);
             CloseHandle(processHandle);
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
