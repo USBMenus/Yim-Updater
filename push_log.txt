@@ -1,3 +1,0 @@
- 
-Push operation started at Tue 06/25/2024  1:29:59.45 
-/bin/ 
