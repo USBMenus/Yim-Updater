@@ -45,11 +45,27 @@
             this.luaTab = new System.Windows.Forms.TabPage();
             this.othersTab = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.StartProcessButton = new Guna.UI2.WinForms.Guna2Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.processNameTextBox = new Guna.UI2.WinForms.Guna2TextBox();
+            this.altProjectsTab = new System.Windows.Forms.TabPage();
+            this.downloadHorseMenu = new Guna.UI2.WinForms.Guna2Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.guna2HtmlLabel4 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.guna2HtmlLabel5 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.guna2HtmlLabel6 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.guna2HtmlLabel7 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.gitHub = new System.Windows.Forms.LinkLabel();
             this.guna2TabControl1.SuspendLayout();
             this.yimTab.SuspendLayout();
             this.luaTab.SuspendLayout();
             this.othersTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.altProjectsTab.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // downloadAddonButton
@@ -145,11 +161,11 @@
             this.injectYimButton.FillColor = System.Drawing.Color.Maroon;
             this.injectYimButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.injectYimButton.ForeColor = System.Drawing.Color.White;
-            this.injectYimButton.Location = new System.Drawing.Point(6, 8);
+            this.injectYimButton.Location = new System.Drawing.Point(6, 56);
             this.injectYimButton.Name = "injectYimButton";
-            this.injectYimButton.Size = new System.Drawing.Size(760, 46);
+            this.injectYimButton.Size = new System.Drawing.Size(406, 46);
             this.injectYimButton.TabIndex = 9;
-            this.injectYimButton.Text = "Inject YimMenu";
+            this.injectYimButton.Text = "Inject DLL";
             this.injectYimButton.Click += new System.EventHandler(this.injectYimButton_Click);
             // 
             // downloadAnimationsButton
@@ -278,7 +294,9 @@
             this.guna2TabControl1.Controls.Add(this.yimTab);
             this.guna2TabControl1.Controls.Add(this.luaTab);
             this.guna2TabControl1.Controls.Add(this.othersTab);
+            this.guna2TabControl1.Controls.Add(this.altProjectsTab);
             this.guna2TabControl1.Controls.Add(this.tabPage1);
+            this.guna2TabControl1.Controls.Add(this.tabPage2);
             this.guna2TabControl1.ItemSize = new System.Drawing.Size(180, 40);
             this.guna2TabControl1.Location = new System.Drawing.Point(0, -1);
             this.guna2TabControl1.Name = "guna2TabControl1";
@@ -315,7 +333,7 @@
             this.yimTab.Padding = new System.Windows.Forms.Padding(3);
             this.yimTab.Size = new System.Drawing.Size(773, 515);
             this.yimTab.TabIndex = 0;
-            this.yimTab.Text = "YimMenu";
+            this.yimTab.Text = "YimMenu (GTA5)";
             // 
             // luaTab
             // 
@@ -345,12 +363,213 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.tabPage1.Controls.Add(this.StartProcessButton);
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.processNameTextBox);
             this.tabPage1.Controls.Add(this.injectYimButton);
             this.tabPage1.Location = new System.Drawing.Point(184, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(773, 515);
             this.tabPage1.TabIndex = 3;
             this.tabPage1.Text = "Tools";
+            // 
+            // StartProcessButton
+            // 
+            this.StartProcessButton.BorderRadius = 5;
+            this.StartProcessButton.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.StartProcessButton.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.StartProcessButton.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.StartProcessButton.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.StartProcessButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(100)))), ((int)(((byte)(25)))));
+            this.StartProcessButton.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.StartProcessButton.ForeColor = System.Drawing.Color.White;
+            this.StartProcessButton.Location = new System.Drawing.Point(539, 8);
+            this.StartProcessButton.Name = "StartProcessButton";
+            this.StartProcessButton.Size = new System.Drawing.Size(227, 41);
+            this.StartProcessButton.TabIndex = 12;
+            this.StartProcessButton.Text = "Start Game Process";
+            this.StartProcessButton.Click += new System.EventHandler(this.StartProcessButton_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 12.25F);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(415, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(118, 23);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Process Name";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.Click += new System.EventHandler(this.label1_Click_1);
+            // 
+            // processNameTextBox
+            // 
+            this.processNameTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.processNameTextBox.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.processNameTextBox.BorderRadius = 5;
+            this.processNameTextBox.BorderThickness = 2;
+            this.processNameTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.processNameTextBox.DefaultText = "";
+            this.processNameTextBox.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.processNameTextBox.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.processNameTextBox.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.processNameTextBox.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.processNameTextBox.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.processNameTextBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.processNameTextBox.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.processNameTextBox.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.processNameTextBox.Location = new System.Drawing.Point(6, 8);
+            this.processNameTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.processNameTextBox.Name = "processNameTextBox";
+            this.processNameTextBox.PasswordChar = '\0';
+            this.processNameTextBox.PlaceholderText = "";
+            this.processNameTextBox.SelectedText = "";
+            this.processNameTextBox.Size = new System.Drawing.Size(406, 41);
+            this.processNameTextBox.TabIndex = 10;
+            // 
+            // altProjectsTab
+            // 
+            this.altProjectsTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.altProjectsTab.Controls.Add(this.downloadHorseMenu);
+            this.altProjectsTab.Location = new System.Drawing.Point(184, 4);
+            this.altProjectsTab.Name = "altProjectsTab";
+            this.altProjectsTab.Size = new System.Drawing.Size(773, 515);
+            this.altProjectsTab.TabIndex = 4;
+            this.altProjectsTab.Text = "HorseMenu (RDR2)";
+            // 
+            // downloadHorseMenu
+            // 
+            this.downloadHorseMenu.BackColor = System.Drawing.Color.Transparent;
+            this.downloadHorseMenu.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.downloadHorseMenu.BorderRadius = 5;
+            this.downloadHorseMenu.BorderThickness = 1;
+            this.downloadHorseMenu.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.downloadHorseMenu.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.downloadHorseMenu.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.downloadHorseMenu.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.downloadHorseMenu.FillColor = System.Drawing.Color.Maroon;
+            this.downloadHorseMenu.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.downloadHorseMenu.ForeColor = System.Drawing.Color.White;
+            this.downloadHorseMenu.Location = new System.Drawing.Point(6, 8);
+            this.downloadHorseMenu.Name = "downloadHorseMenu";
+            this.downloadHorseMenu.Size = new System.Drawing.Size(230, 45);
+            this.downloadHorseMenu.TabIndex = 2;
+            this.downloadHorseMenu.Text = "Download HorseMenu";
+            this.downloadHorseMenu.Click += new System.EventHandler(this.downloadHorseMenu_Click);
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.tabPage2.Controls.Add(this.gitHub);
+            this.tabPage2.Controls.Add(this.guna2HtmlLabel7);
+            this.tabPage2.Controls.Add(this.guna2HtmlLabel6);
+            this.tabPage2.Controls.Add(this.guna2HtmlLabel5);
+            this.tabPage2.Controls.Add(this.guna2HtmlLabel4);
+            this.tabPage2.Controls.Add(this.guna2HtmlLabel3);
+            this.tabPage2.Controls.Add(this.guna2HtmlLabel2);
+            this.tabPage2.Controls.Add(this.guna2HtmlLabel1);
+            this.tabPage2.Location = new System.Drawing.Point(184, 4);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(773, 515);
+            this.tabPage2.TabIndex = 5;
+            this.tabPage2.Text = "About YimUpdate";
+            // 
+            // guna2HtmlLabel1
+            // 
+            this.guna2HtmlLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel1.Font = new System.Drawing.Font("Segoe UI", 12.25F);
+            this.guna2HtmlLabel1.ForeColor = System.Drawing.Color.White;
+            this.guna2HtmlLabel1.Location = new System.Drawing.Point(34, 9);
+            this.guna2HtmlLabel1.Name = "guna2HtmlLabel1";
+            this.guna2HtmlLabel1.Size = new System.Drawing.Size(698, 23);
+            this.guna2HtmlLabel1.TabIndex = 0;
+            this.guna2HtmlLabel1.Text = "YimUpdate is an All-In-One Launchpad for various games, it allows you to inject D" +
+    "LL files into games";
+            // 
+            // guna2HtmlLabel2
+            // 
+            this.guna2HtmlLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel2.Font = new System.Drawing.Font("Segoe UI", 12.25F);
+            this.guna2HtmlLabel2.ForeColor = System.Drawing.Color.White;
+            this.guna2HtmlLabel2.Location = new System.Drawing.Point(34, 30);
+            this.guna2HtmlLabel2.Name = "guna2HtmlLabel2";
+            this.guna2HtmlLabel2.Size = new System.Drawing.Size(442, 23);
+            this.guna2HtmlLabel2.TabIndex = 1;
+            this.guna2HtmlLabel2.Text = "like Grand Theft Auto 5, Red Dead Redemption 2 and Minecraft.";
+            // 
+            // guna2HtmlLabel3
+            // 
+            this.guna2HtmlLabel3.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel3.Font = new System.Drawing.Font("Segoe UI", 12.25F);
+            this.guna2HtmlLabel3.ForeColor = System.Drawing.Color.White;
+            this.guna2HtmlLabel3.Location = new System.Drawing.Point(34, 69);
+            this.guna2HtmlLabel3.Name = "guna2HtmlLabel3";
+            this.guna2HtmlLabel3.Size = new System.Drawing.Size(703, 23);
+            this.guna2HtmlLabel3.TabIndex = 2;
+            this.guna2HtmlLabel3.Text = "YimUpdate also allows you to launch various games right from the program without " +
+    "needing to open";
+            // 
+            // guna2HtmlLabel4
+            // 
+            this.guna2HtmlLabel4.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel4.Font = new System.Drawing.Font("Segoe UI", 12.25F);
+            this.guna2HtmlLabel4.ForeColor = System.Drawing.Color.White;
+            this.guna2HtmlLabel4.Location = new System.Drawing.Point(34, 90);
+            this.guna2HtmlLabel4.Name = "guna2HtmlLabel4";
+            this.guna2HtmlLabel4.Size = new System.Drawing.Size(554, 23);
+            this.guna2HtmlLabel4.TabIndex = 3;
+            this.guna2HtmlLabel4.Text = "the games launcher, like Epic Games, R* Launcher, Minecraft Launcher or Steam";
+            // 
+            // guna2HtmlLabel5
+            // 
+            this.guna2HtmlLabel5.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel5.Font = new System.Drawing.Font("Segoe UI", 12.25F);
+            this.guna2HtmlLabel5.ForeColor = System.Drawing.Color.White;
+            this.guna2HtmlLabel5.Location = new System.Drawing.Point(34, 136);
+            this.guna2HtmlLabel5.Name = "guna2HtmlLabel5";
+            this.guna2HtmlLabel5.Size = new System.Drawing.Size(676, 23);
+            this.guna2HtmlLabel5.TabIndex = 4;
+            this.guna2HtmlLabel5.Text = "Not only can you do that, but it also allows you to download Menus for the games," +
+    " like Horion for";
+            // 
+            // guna2HtmlLabel6
+            // 
+            this.guna2HtmlLabel6.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel6.Font = new System.Drawing.Font("Segoe UI", 12.25F);
+            this.guna2HtmlLabel6.ForeColor = System.Drawing.Color.White;
+            this.guna2HtmlLabel6.Location = new System.Drawing.Point(34, 156);
+            this.guna2HtmlLabel6.Name = "guna2HtmlLabel6";
+            this.guna2HtmlLabel6.Size = new System.Drawing.Size(666, 23);
+            this.guna2HtmlLabel6.TabIndex = 5;
+            this.guna2HtmlLabel6.Text = "Minecraft Bedrock, HorseMenu for Red Dead Redemtion 2 and YimMenu for Grand Theft" +
+    " Auto 5";
+            // 
+            // guna2HtmlLabel7
+            // 
+            this.guna2HtmlLabel7.BackColor = System.Drawing.Color.Transparent;
+            this.guna2HtmlLabel7.Font = new System.Drawing.Font("Segoe UI", 12.25F);
+            this.guna2HtmlLabel7.ForeColor = System.Drawing.Color.White;
+            this.guna2HtmlLabel7.Location = new System.Drawing.Point(34, 458);
+            this.guna2HtmlLabel7.Name = "guna2HtmlLabel7";
+            this.guna2HtmlLabel7.Size = new System.Drawing.Size(686, 23);
+            this.guna2HtmlLabel7.TabIndex = 6;
+            this.guna2HtmlLabel7.Text = "YimUpdate is FREE & OPEN SOURCE!  IF YOU PAID FOR THIS PROJECT LET US KNOW ON GIT" +
+    "HUB!";
+            // 
+            // gitHub
+            // 
+            this.gitHub.AutoSize = true;
+            this.gitHub.Font = new System.Drawing.Font("Segoe UI", 12.25F);
+            this.gitHub.LinkColor = System.Drawing.Color.Red;
+            this.gitHub.Location = new System.Drawing.Point(209, 484);
+            this.gitHub.Name = "gitHub";
+            this.gitHub.Size = new System.Drawing.Size(347, 23);
+            this.gitHub.TabIndex = 7;
+            this.gitHub.TabStop = true;
+            this.gitHub.Text = "https://github.com/USBMenus/Yim-Updater";
+            this.gitHub.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(100)))), ((int)(((byte)(255)))));
+            this.gitHub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.gitHub_LinkClicked);
             // 
             // MainForm
             // 
@@ -374,6 +593,10 @@
             this.luaTab.ResumeLayout(false);
             this.othersTab.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.altProjectsTab.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -382,6 +605,7 @@
 
         private Guna.UI2.WinForms.Guna2Button downloadAddonButton;
         private Guna.UI2.WinForms.Guna2Button downloadYimButton;
+        private Guna.UI2.WinForms.Guna2Button downloadHorseMenu;
         private Guna.UI2.WinForms.Guna2Button howToUseButton;
         private Guna.UI2.WinForms.Guna2Button howToUseButton2;
         private Guna.UI2.WinForms.Guna2Button deleteCacheButton;
@@ -397,6 +621,19 @@
         private System.Windows.Forms.TabPage luaTab;
         private System.Windows.Forms.TabPage othersTab;
         private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage altProjectsTab;
+        private System.Windows.Forms.Label label1;
+        private Guna.UI2.WinForms.Guna2TextBox processNameTextBox;
+        private Guna.UI2.WinForms.Guna2Button StartProcessButton;
+        private System.Windows.Forms.TabPage tabPage2;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel1;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel4;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel3;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel2;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel6;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel5;
+        private System.Windows.Forms.LinkLabel gitHub;
+        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel7;
     }
 }
 
