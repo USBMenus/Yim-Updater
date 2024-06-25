@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -16,6 +17,8 @@ namespace yimUpdater
     {
         private bool fileExplorerOpened = false;
         private string selectedDLLPath = "";
+        private const string placeholderText = "Enter process name WITHOUT .exe (Ex: GTA5 or RDR2)...";
+        private Dictionary<string, string> knownProcesses;
 
         [DllImport("kernel32.dll")]
         public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
@@ -52,18 +55,107 @@ namespace yimUpdater
         public MainForm()
         {
             InitializeComponent();
+            InitializeKnownProcesses();
             ToolTip tt = new ToolTip();
             tt.SetToolTip(downloadAddonButton, "Download The Extras Addon To %AppData%\\YimMenu\\scripts");
-            tt.SetToolTip(downloadYimButton, "Download YimMenu To The Desired Folder");
+            tt.SetToolTip(downloadYimButton, "Download YimMenu.dll to your desktop");
+            tt.SetToolTip(downloadHorseMenu, "Download HorseMenu.dll to your desktop");
             tt.SetToolTip(howToUseButton, "Shows a message explaining how to use YimMenu");
             tt.SetToolTip(extrasGuideButton, "Shows a message explaining how to add Extras Addon to YimMenu");
             tt.SetToolTip(animGuideButton, "Shows a message explaining how to add Animations to YimMenu");
             tt.SetToolTip(xmlGuideButton, "Shows a message explaining how to add XMLs to YimMenu");
-            tt.SetToolTip(deleteCacheButton, "Deletes The Cache Folder From %AppData%\\YimMenu");
-            tt.SetToolTip(injectYimButton, "Inject YimMenu DLL Into GTA5.exe");
+            tt.SetToolTip(deleteCacheButton, "Deletes the Cache Folder from %AppData%\\YimMenu");
+            tt.SetToolTip(injectYimButton, "Inject the selected DLL into the selected process");
             tt.SetToolTip(removeYimMenuButton, "Deletes YimMenu from %AppData%");
             tt.SetToolTip(downloadAnimationsButton, "Downloads animDictsCompact to %AppData%\\YimMenu");
-            tt.SetToolTip(downloadXMLsButton, "Currently Broken");
+            tt.SetToolTip(downloadXMLsButton, "Brings you to the XML's mega drive");
+            tt.SetToolTip(processNameTextBox, "Enter a Process Name WITHOUT .exe at the end (Example: GTA5)");
+
+            processNameTextBox.ForeColor = SystemColors.GrayText;
+            processNameTextBox.Text = placeholderText;
+            processNameTextBox.Enter += RemovePlaceholder;
+            processNameTextBox.Leave += SetPlaceholder;
+        }
+
+        private void InitializeKnownProcesses()
+        {
+            knownProcesses = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "GTA5", "PlayGTAV.exe" },
+                { "RDR2", "RDR2.exe" },
+                { "MINECRAFT", "minecraft.windows.exe" }
+                // Add other known processes and their executables here
+            };
+        }
+
+        private void StartProcessButton_Click(object sender, EventArgs e)
+        {
+            string processName = processNameTextBox.Text.Trim();
+            if (string.IsNullOrEmpty(processName) || processName == placeholderText)
+            {
+                MessageBox.Show("Please enter a process name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (knownProcesses.TryGetValue(processName, out string executableName))
+            {
+                string executablePath = FindExecutable(executableName);
+                if (!string.IsNullOrEmpty(executablePath))
+                {
+                    try
+                    {
+                        Process.Start(executablePath);
+                        MessageBox.Show($"{processName} started successfully.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to start {processName}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"Executable for {processName} not found on any local drive.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show($"Process path for {processName} not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private string FindExecutable(string executableName)
+        {
+            var excludedDirectories = new List<string> { "GTAV_Old", "SomeOtherFolderToExclude" }; // Add other folders to exclude
+
+            foreach (char driveLetter in Enumerable.Range('A', 26).Select(i => (char)i))
+            {
+                string[] programFilesPaths = {
+                $"{driveLetter}:\\Program Files",
+                $"{driveLetter}:\\Program Files (x86)"
+            };
+
+                foreach (string programFilesPath in programFilesPaths)
+                {
+                    if (Directory.Exists(programFilesPath))
+                    {
+                        try
+                        {
+                            var files = Directory.GetFiles(programFilesPath, executableName, SearchOption.AllDirectories)
+                                                 .Where(file => !excludedDirectories.Any(dir => file.IndexOf(dir, StringComparison.OrdinalIgnoreCase) >= 0));
+                            if (files.Any())
+                            {
+                                return files.First(); // Return the first found executable path
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle any exceptions that occur during the search
+                            Console.WriteLine($"Error searching directory {programFilesPath}: {ex.Message}");
+                        }
+                    }
+                }
+            }
+            return null; // Executable not found
         }
 
         private void downloadAddonButton_Click(object sender, EventArgs e)
@@ -116,6 +208,24 @@ namespace yimUpdater
             }
         }
 
+        private void downloadHorseMenu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string filePath = Path.Combine(desktopPath, "");
+                string url = "https://github.com/YimMenu/HorseMenu/releases/download/nightly/HorseMenu.dll";
+
+                DownloadFile(url, filePath, "HorseMenu.dll");
+
+                MessageBox.Show("HorseMenu.dll downloaded to your desktop.", "Download Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void howToUseButton_Click(object sender, EventArgs e)
         {
             string guideMessage = "How to Install/Use YimMenu:\n\n" +
@@ -126,6 +236,15 @@ namespace yimUpdater
                 "5. Enjoy using YimMenu to enhance your gameplay!\n\n";
 
             MessageBox.Show(guideMessage, "How to Install/Use YimMenu", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void gitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Specify that the link was visited.
+            this.gitHub.LinkVisited = true;
+
+            // Navigate to the URL in the default web browser.
+            System.Diagnostics.Process.Start(this.gitHub.Text);
         }
 
         private void extrasGuideButton_Click(object sender, EventArgs e)
@@ -145,13 +264,13 @@ namespace yimUpdater
         private void animGuideButton_Click(object sender, EventArgs e)
         {
             string guideMessage = "How to Install/Use Animations:\n\n" +
-                "1. Click Download Animations\n\n" +
-                "2. Start GTA V \n\n" +
-                "3. Inject YimMenu\n\n" +
-                "4. Once in-game, press the INSERT key to open the YimMenu.\n\n" +
-                "5. In YimMenu, Click Settings -> Lua Scripts\n\n" +
-                "7. Enable the 'Auto Reload Changed Scripts' checkbox & press 'Reload All'\n\n" +
-                "8. the 'Extras Addon' tab should appear at the bottom of YimMenu (right above the player list)\n\n";
+                "1. Click Download Animations\n" +
+                "2. Start GTA V & Load into Story Mode COMPLETELY\n" +
+                "3. Inject YimMenu\n" +
+                "4. Once in-game, press the INSERT key to open YimMenu.\n" +
+                "5. Click the 'Self' tab and underneath it, click Animations" +
+                "7. Click 'List From Debug' on the right side and then click 'Fetch All Anims'\n" +
+                "8. Use the searchbox or manually select an animation in the list and click Play";
 
             MessageBox.Show(guideMessage, "How to Install/Use Animations", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -159,14 +278,16 @@ namespace yimUpdater
         private void xmlGuideButton_Click(object sender, EventArgs e)
         {
             string guideMessage = "How to Install/Use XML Maps/Vehicles:\n\n" +
-            "Click Download XML's and your browser window should open to the mega url\n\n" +
-            "After downloading, unzip the folder to your desktop and open it\n" +
-            "Once it is opened, rename both folders (XML Maps and XML Vehicles) to the following\n\n" +
+            "1. Click Download XML's and your browser window should open to the mega url\n" +
+            "2. After downloading, unzip the folder to your desktop and open it\n" +
+            "3. Once it is opened, rename both folders (XML Maps and XML Vehicles) to the following\n\n" +
             "XML Maps -> xml_maps\n" +
             "XML Vehicles -> xml_vehicles\n\n" +
-            "Once you are done, open a new File Explorer Window/Tab and type %APPDATA%\\YimMenu in the PATH box\n" +
-            "You should now see a list of folders, one being xml_maps and the other being xml_vehicles\n" +
-            "Simply drag and drop the folders you renamed from your desktop into the YimMenu folder & overwrite them";
+            "4. Once you are done, open a new File Explorer Window/Tab and type %APPDATA%\\YimMenu in the PATH box\n" +
+            "5. You should now see a list of folders, one being xml_maps and the other being xml_vehicles\n" +
+            "6. Simply drag and drop the folders you renamed from your desktop into the YimMenu folder & overwrite them\n" +
+            "7. Once done, Load into GTA and go to the 'World' Tab for XML Maps OR 'Vehicle -> Vehicle Spawner' tab for XML Vehicles\n" +
+            "(the spawner has a bullet that says XML)";
 
             DialogResult result = MessageBox.Show(guideMessage, "How to Install/Use XML's", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -188,6 +309,24 @@ namespace yimUpdater
             }
         }
 
+        private void RemovePlaceholder(object sender, EventArgs e)
+        {
+            if (processNameTextBox.Text == placeholderText)
+            {
+                processNameTextBox.Text = "";
+                processNameTextBox.ForeColor = SystemColors.WindowText;
+            }
+        }
+
+        private void SetPlaceholder(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(processNameTextBox.Text))
+            {
+                processNameTextBox.Text = placeholderText;
+                processNameTextBox.ForeColor = SystemColors.GrayText;
+            }
+        }
+
         private void injectYimButton_Click(object sender, EventArgs e)
         {
             if (!fileExplorerOpened)
@@ -196,12 +335,12 @@ namespace yimUpdater
                 {
                     ofd.Filter = "DLL files (*.dll)|*.dll";
                     ofd.Title = "Select A DLL";
-                    ofd.RestoreDirectory = true;
+                    ofd.RestoreDirectory = false;
 
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
                         selectedDLLPath = ofd.FileName;
-                        fileExplorerOpened = true;
+                        fileExplorerOpened = false;
                     }
                     else
                     {
@@ -210,10 +349,17 @@ namespace yimUpdater
                 }
             }
 
-            Process[] processes = Process.GetProcessesByName("GTA5");
+            string processName = processNameTextBox.Text.Trim();
+            if (string.IsNullOrEmpty(processName) || processName == placeholderText)
+            {
+                MessageBox.Show("Please enter a process name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Process[] processes = Process.GetProcessesByName(processName);
             if (processes.Length == 0)
             {
-                MessageBox.Show("GTA5.exe is not running. Please start the game before injecting", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"{processName}.exe is not running. Please start the application before injecting", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -354,6 +500,11 @@ namespace yimUpdater
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
         {
 
         }
