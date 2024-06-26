@@ -4,7 +4,7 @@ An all-in-one tool for YimMenu
 # Features:
 Downloading, installing, updating YimMenu and its related scripts for GTA5
 Downloading HorseMenu for RDR2
-Injecting into Various Games (GTA5, RDR2 & Minecraft currently supported)
+Injecting into Various Games (GTA5 & RDR2 currently supported)
 Launching Game Processes (GTA5, RDR2 & Minecraft currently supported)
 
 
